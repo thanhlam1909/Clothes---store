@@ -773,6 +773,75 @@ namespace High_Webbanquanao.Controllers
             return RedirectToAction("Index"); // Redirect to the desired page after payment
         }
 
+        [HttpPost]
+        public IActionResult UpdateAccount(string userId, string fullName, string phoneNumber, string email, string address)
+        {
+            try
+            {
+                // Validate input data if necessary
+
+                // Retrieve the user from the database based on userId
+                var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
+
+                if (user != null)
+                {
+                    // Update user's account details
+                    user.FullName = fullName;
+                    user.PhoneNumber = phoneNumber;
+                    user.Email = email;
+                    user.Address = address;
+
+                    // Save changes to the database
+                    _context.SaveChanges();
+
+                    return Json(new { success = true, message = "Account details updated successfully" });
+                }
+
+                return Json(new { success = false, message = "User not found" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult ChangePassword(string userId, string currentPassword, string newPassword, string confirmPassword)
+        {
+            try
+            {
+                // Validate input data if necessary
+
+                // Retrieve the user from the database based on userId
+                var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
+
+                if (user != null)
+                {
+                    // Check if the current password matches the user's stored password
+                    if (user.Password == currentPassword)
+                    {
+                        // Update the user's password with the new password
+                        user.Password = newPassword;
+
+                        // Save changes to the database
+                        _context.SaveChanges();
+
+                        return Json(new { success = true, message = "Password changed successfully" });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Current password is incorrect" });
+                    }
+                }
+
+                return Json(new { success = false, message = "User not found" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
 
 
     }

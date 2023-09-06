@@ -228,25 +228,25 @@
                                 <h4>Account Details</h4>
                                 <div class="row">
                                     <div class="col-md-6" hidden>
-                                        <input type="text" value="@Model.User.UserId" placeholder=" @Model.User.UserId">
+                                        <input type="text" id="userIdField" value="@Model.User.UserId" placeholder="UserID">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" value="@Model.User.FullName" placeholder=" @Model.User.FullName">
+                                        <input type="text" id="fullNameField" value="@Model.User.FullName" placeholder="Full Name">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" value="@Model.User.Username" placeholder=" @Model.User.Username">
+                                        <input type="text" id="usernameField" value="@Model.User.Username" placeholder="Username">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="number" value="@Model.User.PhoneNumber" placeholder=" @Model.User.PhoneNumber">
+                                        <input type="number" id="phoneNumberField" value="@Model.User.PhoneNumber" placeholder="Phone Number">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="email" value="@Model.User.Email" placeholder=" @Model.User.Email">
+                                        <input type="email" id="emailField" value="@Model.User.Email" placeholder="Email">
                                     </div>
                                     <div class="col-md-12">
-                                        <input type="text" value="@Model.User.Address" placeholder=" @Model.User.Address">
+                                        <input type="text" id="addressField" value="@Model.User.Address" placeholder="Address">
                                     </div>
                                     <div class="col-md-12">
-                                        <button>Update Account</button>
+                                        <button id="updateAccountButton">Update Account</button>
                                         <br><br>
                                     </div>
                                 </div>
@@ -257,13 +257,13 @@
                                         <button style="margin-bottom:10px" type="button" id="showPasswordButton">Hiện mật khẩu</button>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" placeholder="New Password">
+                                        <input type="password" id="newPasswordField" placeholder="New Password">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" placeholder="Confirm Password">
+                                        <input type="password" id="confirmPasswordField" placeholder="Confirm Password">
                                     </div>
                                     <div class="col-md-12">
-                                        <button>Save Changes</button>
+                                        <button id="changePasswordButton">Save Changes</button>
                                     </div>
                                 </div>
                             }
@@ -451,6 +451,71 @@
             }
         });
     </script>
+    <script>
+        // Handle the "Update Account" button click
+        $("#updateAccountButton").click(function () {
+            var userId = $("#userIdField").val(); // Get the user ID from the input
+            var fullName = $("#fullNameField").val(); // Get the updated full name from the input
+            var username = $("#usernameField").val(); // Get the updated username from the input
+            var phoneNumber = $("#phoneNumberField").val(); // Get the updated phone number from the input
+            var email = $("#emailField").val(); // Get the updated email from the input
+            var address = $("#addressField").val(); // Get the updated address from the input
+
+
+            // Make an Ajax call to update the user account details
+            $.ajax({
+                type: "POST",
+                url: "/Trangchu/UpdateAccount", // Replace with your controller action URL
+                data: {
+                    userId: userId,
+                    fullName: fullName,
+                    phoneNumber: phoneNumber,
+                    email: email,
+                    address: address
+                },
+                success: function (data) {
+                    // Handle success (e.g., show a success message)
+                    alert("Account details updated successfully!");
+                },
+                error: function () {
+                    // Handle error (e.g., show an error message)
+                    alert("Failed to update account details.");
+                }
+            });
+        });
+
+        // Handle the "Change Password" button click
+        $("#changePasswordButton").click(function () {
+            var userId = "@Model.User.UserId"; // Get the user ID from the model
+            var currentPassword = $("#passwordField").val(); // Get the current password from the input
+            var newPassword = $("#newPasswordField").val(); // Get the new password from the input
+            var confirmPassword = $("#confirmPasswordField").val(); // Get the confirmed password from the input
+
+            // Make an Ajax call to change the user's password
+            $.ajax({
+                type: "POST",
+                url: "/Trangchu/ChangePassword", // Replace with your controller action URL
+                data: {
+                    userId: userId,
+                    currentPassword: currentPassword,
+                    newPassword: newPassword,
+                    confirmPassword: confirmPassword
+                },
+                success: function (data) {
+                    // Handle success (e.g., show a success message)
+                    alert("Password changed successfully!");
+                },
+                error: function () {
+                    // Handle error (e.g., show an error message)
+                    alert("Failed to change password.");
+                }
+            });
+        });
+
+            // Add your code for handling the "Show Password" button if needed
+    </script>
+
+
 </body>
 
 </html>
