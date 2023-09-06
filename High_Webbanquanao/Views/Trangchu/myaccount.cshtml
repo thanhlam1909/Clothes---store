@@ -227,6 +227,9 @@
                             {
                                 <h4>Account Details</h4>
                                 <div class="row">
+                                    <div class="col-md-6" hidden>
+                                        <input type="text" value="@Model.User.UserId" placeholder=" @Model.User.UserId">
+                                    </div>
                                     <div class="col-md-6">
                                         <input type="text" value="@Model.User.FullName" placeholder=" @Model.User.FullName">
                                     </div>
@@ -240,7 +243,7 @@
                                         <input type="email" value="@Model.User.Email" placeholder=" @Model.User.Email">
                                     </div>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder=" @Model.User.Address">
+                                        <input type="text" value="@Model.User.Address" placeholder=" @Model.User.Address">
                                     </div>
                                     <div class="col-md-12">
                                         <button>Update Account</button>
@@ -251,7 +254,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <input type="password" id="passwordField" value="@Model.User.Password" placeholder="@Model.User.Password">
-                                        <button type="button" id="showPasswordButton">Hiện mật khẩu</button>
+                                        <button style="margin-bottom:10px" type="button" id="showPasswordButton">Hiện mật khẩu</button>
                                     </div>
                                     <div class="col-md-6">
                                         <input type="text" placeholder="New Password">
