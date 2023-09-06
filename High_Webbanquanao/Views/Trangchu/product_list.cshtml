@@ -1,0 +1,480 @@
+﻿
+
+@using High_Webbanquanao.Data
+@{
+    var namCategories = (List<ProductCategory>)ViewBag.ProductCategories;
+    var nuCategories = (List<ProductCategory>)ViewBag.ProductCategories;
+}
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>E Shop - Bootstrap Ecommerce Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Bootstrap Ecommerce Template" name="keywords">
+    <meta content="Bootstrap Ecommerce Template Free Download" name="description">
+
+    <!-- Favicon -->
+    <link href="~/Asset/img/favicon.ico" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Asset/lib/slick/slick.css" rel="stylesheet">
+    <link href="~/Asset/lib/slick/slick-theme.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Template Stylesheet -->
+    <link href="~/Asset/css/style.css" rel="stylesheet">
+    <style>
+        #advanced-search-toggle {
+            background-color: #41ced8;
+            border: none;
+            color: white;
+            padding: 6px 18px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+            #advanced-search-toggle:hover {
+                background-color: #2980b9;
+            }
+    </style>
+</head>
+
+<body>
+    <!-- Top Header Start -->
+    <div class="top-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <div class="logo">
+                        <a href="@Url.Action("Index", "Trangchu")">
+                            <img src="~/Asset/img/logo.png" alt="Logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="search">
+                        <form action="@Url.Action("Search", "Trangchu")" method="get">
+                            <input type="text" name="query" placeholder="Search">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="user">
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tài khoản người dùng</a>
+                            <div class="dropdown-menu">
+                                @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("UserId")))
+                                {
+                                    <a href="@Url.Action("myaccount", "Trangchu")" class="dropdown-item">Tài khoản người dùng</a>
+                                    <a href="@Url.Action("Logout", "Trangchu")" class="dropdown-item">Đăng xuất</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Login", "Trangchu")" class="dropdown-item">Đăng nhập</a>
+                                    <a href="@Url.Action("Register", "Trangchu")" class="dropdown-item">Đăng kí</a>
+                                }
+                            </div>
+                        </div>
+
+                        <a href="@Url.Action("cart", "Trangchu")" class="cart">
+                            <i class="fa fa-cart-plus"></i>
+                            <span>(0)</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Top Header End -->
+    <!-- Header Start -->
+    <div class="header">
+        <div class="container">
+            <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                <a href="#" class="navbar-brand">MENU</a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav m-auto">
+                        <a href="@Url.Action("index", "Trangchu")" class="nav-item nav-link active">Trang chủ</a>
+                        <a href="@Url.Action("product_list", "Trangchu")" class="nav-item nav-link">Sản phẩm</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Danh mục sản phẩm</a>
+                            <div class="dropdown-menu">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6 class="dropdown-header">Danh mục Nam</h6>
+                                        @foreach (var category in namCategories.Where(c => c.Gender == "Nam"))
+                                        {
+                                            <a href="@Url.Action("product_list_category", "Trangchu", new { categoryId = category.CategoryId, gender = "Nam" })" class="dropdown-item">@category.CategoryName</a>
+                                        }
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6 class="dropdown-header">Danh mục Nữ</h6>
+                                        @foreach (var category in nuCategories.Where(c => c.Gender == "Nữ"))
+                                        {
+                                            <a href="@Url.Action("product_list_category", "Trangchu", new { categoryId = category.CategoryId, gender = "Nữ" })" class="dropdown-item">@category.CategoryName</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="@Url.Action("contact", "Trangchu")" class="nav-item nav-link">Liên hệ chúng tôi</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Header End -->
+    <!-- Breadcrumb Start -->
+    <div class="breadcrumb-wrap">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="@Url.Action("index", "Trangchu")">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="@Url.Action("product_list", "Trangchu")">Sản phẩm</a></li>
+                <li class="breadcrumb-item active">Danh sách sản phẩm</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+    <!-- Product List Start -->
+    <div class="product-view">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="sidebar-widget category">
+                        <h2 class="title">Danh mục sản phẩm</h2>
+                        <ul>
+                            <li><a href="#">Áo thun</a><span>(83)</span></li>
+                            <li><a href="#">Quần jeans</a><span>(198)</span></li>
+                            <li><a href="#">Váy dự tiệc</a><span>(95)</span></li>
+                            <li><a href="#">Đầm maxi</a><span>(48)</span></li>
+                            <li><a href="#">Áo len</a><span>(210)</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-widget image">
+                        <h2 class="title">Featured Product</h2>
+                        <a href="#">
+                            <img src="~/Asset/img/category-1.jpg" alt="Image">
+                        </a>
+                    </div>
+
+                    <div class="sidebar-widget brands">
+                        <h2 class="title">Nhãn hàng</h2>
+                        <ul>
+                            <li><a href="#">Nulla </a><span>(45)</span></li>
+                            <li><a href="#">Curabitur </a><span>(34)</span></li>
+                            <li><a href="#">Nunc </a><span>(67)</span></li>
+                            <li><a href="#">Ullamcorper</a><span>(74)</span></li>
+                            <li><a href="#">Fusce </a><span>(89)</span></li>
+                            <li><a href="#">Sagittis</a><span>(28)</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-widget tag">
+                        <h2 class="title">Các từ tìm kiếm nổi bật</h2>
+                        <a href="#">Lorem ipsum</a>
+                        <a href="#">Vivamus</a>
+                        <a href="#">Phasellus</a>
+                        <a href="#">pulvinar</a>
+                        <a href="#">Curabitur</a>
+                        <a href="#">Fusce</a>
+                        <a href="#">Sem quis</a>
+                        <a href="#">Mollis metus</a>
+                        <a href="#">Sit amet</a>
+                        <a href="#">Vel posuere</a>
+                        <a href="#">orci luctus</a>
+                        <a href="#">Nam lorem</a>
+                    </div>
+                </div>
+
+                    
+
+                <div class="col-md-9">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="product-search">
+                                    <input type="email" id="basic-search" placeholder="Tìm kiếm">
+                                    <button id="basic-search-button"><i class="fa fa-search"></i></button>
+                                </div>
+                                <button style="margin-bottom:20px" id="advanced-search-toggle">Tìm kiếm nâng cao</button>
+
+                                <div id="advanced-search-section" style="display: none;">
+                                    <!-- Advanced search form content -->
+                                    <input type="text" id="advanced-search-query" placeholder="Tìm kiếm">
+                                    <input type="number" id="advanced-min-price" placeholder="Từ giá">
+                                    <input type="number" id="advanced-max-price" placeholder="Đến giá">
+                                    <button id="advanced-search-button"><i class="fa fa-search"></i></button>
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="product-short">
+                                    <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Product short by</a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item">Newest</a>
+                                            <a href="#" class="dropdown-item">Popular</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="search-results" class="row"></div>
+
+                    <div id="product-list-container" class="row">
+                        @foreach (var product in Model.Productlist)
+                        {
+                            <div class="col-lg-4">
+                                <div class="product-item">
+                                    <div class="product-image">
+                                        <a href="@Url.Action("product_detail", "Trangchu", new { productId = product.ProductId })">
+                                            <img style="height: 350px;" src="~/HinhAnh/SanPham/@product.ProductImage" alt="Product Image">
+                                        </a>
+                                        <div class="product-action">
+                                            <a href="@Url.Action("AddToCart", "Trangchu", new { productId = product.ProductId })"><i class="fa fa-cart-plus"></i></a>
+                                            <a href="#"><i class="fa fa-heart"></i></a>
+                                            <a href="#"><i class="fa fa-search"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="product-content">
+                                        <div class="title"><a href="@Url.Action("product_detail", "Trangchu", new { productId = product.ProductId })">@product.ProductName</a></div>
+
+                                        <div class="ratting">
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <i class="fa fa-star"></i>
+                                            }
+                                        </div>
+                                        <div class="price">$@product.Price</div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="col-lg-12">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                @for (int i = 1; i <= Model.TotalPages; i++)
+                                {
+                                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                        <a class="page-link" href="?page=@i">@i</a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product List End -->
+    <!-- Footer Start -->
+    <div class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h1>E Shop</h1>
+                        <p>
+                            Xin chào quý khách hàng, Chào mừng bạn đến với cửa hàng trực tuyến của chúng tôi! Với hàng ngàn sản phẩm đa dạng từ nhiều danh mục khác nhau, chúng tôi tự hào mang đến những sản phẩm chất lượng và dịch vụ tốt nhất cho bạn. Hãy khám phá và trải nghiệm
+                            mua sắm trực tuyến tuyệt vời cùng chúng tôi.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Trang Tiện Ích</h3>
+                        <ul>
+                            <li><a href="@Url.Action("product_list", "Trangchu")">Sản Phẩm</a></li>
+
+                            <li><a href="@Url.Action("cart", "Trangchu")">Giỏ Hàng</a></li>
+                            <li><a href="@Url.Action("Checkout", "Trangchu")">Thanh toán</a></li>
+                            @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("UserId")))
+                            {
+
+                            }
+                            else
+                            {
+                                <li><a href="@Url.Action("login", "Trangchu")">Đăng nhập</a></li>
+
+                                <li><a href="@Url.Action("Register", "Trangchu")">Đăng kí</a></li>
+
+                            }
+                            <li><a href="@Url.Action("myaccount", "Trangchu")">Tài khoản của tôi</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Liên Kết Nhanh</h3>
+                        <ul>
+                            <li><a href="@Url.Action("product_list", "Trangchu")">Sản Phẩm</a></li>
+                            <li><a href="@Url.Action("cart", "Trangchu")">Giỏ Hàng</a></li>
+                            <li><a href="@Url.Action("Checkout", "Trangchu")">Thanh toán</a></li>
+                            @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("UserId")))
+                            {
+
+                            }
+                            else
+                            {
+                                <li><a href="@Url.Action("login", "Trangchu")">Đăng nhập</a></li>
+
+                                <li><a href="@Url.Action("Register", "Trangchu")">Đăng kí</a></li>
+                            }
+                            <li><a href="@Url.Action("myaccount", "Trangchu")">Tài khoản của tôi</a></li>
+                            <li><a href="@Url.Action("wishlist", "Trangchu")">Danh Sách Yêu Thích</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Liên hệ với chúng tôi</h3>
+                        <div class="contact-info">
+                            <p><i class="fa fa-map-marker"></i>123 E Shop, Los Angeles, CA, USA</p>
+                            <p><i class="fa fa-envelope"></i>email@example.com</p>
+                            <p><i class="fa fa-phone"></i>+123-456-7890</p>
+                            <div class="social">
+                                <a href=""><i class="fa fa-twitter"></i></a>
+                                <a href=""><i class="fa fa-facebook"></i></a>
+                                <a href=""><i class="fa fa-linkedin"></i></a>
+                                <a href=""><i class="fa fa-instagram"></i></a>
+                                <a href=""><i class="fa fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row payment">
+                <div class="col-md-6">
+                    <div class="payment-method">
+                        <p>We Accept:</p>
+                        <img src="~/Asset/img/payment-method.png" alt="Payment Method" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="payment-security">
+                        <p>Secured By:</p>
+                        <img src="~/Asset/img/godaddy.svg" alt="Payment Security" />
+                        <img src="~/Asset/img/norton.svg" alt="Payment Security" />
+                        <img src="~/Asset/img/ssl.svg" alt="Payment Security" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+    <!-- Footer Bottom Start -->
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 copyright">
+                    <p>Copyright &copy; <a href="https://htmlcodex.com">HTML Codex</a>. All Rights Reserved</p>
+                </div>
+
+                <div class="col-md-6 template-by">
+                    <p>Template By <a href="https://htmlcodex.com">HTML Codex</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Bottom End -->
+    <!-- Back to Top -->
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Asset/lib/easing/easing.min.js"></script>
+    <script src="~/Asset/lib/slick/slick.min.js"></script>
+
+    <script src="~/js/site.js"></script>
+
+    <!-- Template Javascript -->
+
+    <script>
+        $(document).ready(function () {
+            $("#basic-search-button").click(function () {
+                var searchTerm = $("#basic-search").val();
+
+                $.ajax({
+                    url: "/Trangchu/Searchs", // Thay thế 'ControllerName' bằng tên thực tế của controller
+                    type: "POST",
+                    data: { searchTerm: searchTerm },
+                    success: function (data) {
+                        $(".pagination").hide(); // Ẩn phân trang
+
+                        $("#product-list-container").hide(); // Ẩn phần sản phẩm hiện tại
+                        $("#search-results").html(data).show(); // Hiển thị kết quả tìm kiếm mới
+                    },
+                    error: function () {
+                        console.log("Error during search request.");
+                    }
+                });
+            });
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Toggle section code here (as shown above)
+
+            $("#advanced-search-button").click(function () {
+                var searchTerm = $("#advanced-search-query").val();
+                var minPrice = $("#advanced-min-price").val();
+                var maxPrice = $("#advanced-max-price").val();
+
+                $.ajax({
+                    url: "/Trangchu/AdvancedSearch", // Replace with your controller and action URL
+                    type: "POST",
+                    data: {
+                        searchTerm: searchTerm,
+                        minPrice: minPrice,
+                        maxPrice: maxPrice
+                    },
+                    success: function (data) {
+                        $(".pagination").hide();
+                        $("#product-list-container").hide();
+                        $("#search-results").html(data).show();
+                    },
+                    error: function () {
+                        console.log("Error during advanced search request.");
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

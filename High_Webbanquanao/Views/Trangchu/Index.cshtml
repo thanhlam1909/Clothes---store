@@ -1,0 +1,489 @@
+@using High_Webbanquanao.Data
+@{
+    var namCategories = (List<ProductCategory>)ViewBag.ProductCategories;
+    var nuCategories = (List<ProductCategory>)ViewBag.ProductCategories;
+}
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>E Shop - Bootstrap Ecommerce Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Bootstrap Ecommerce Template" name="keywords">
+    <meta content="Bootstrap Ecommerce Template Free Download" name="description">
+
+    <!-- Favicon -->
+    <link href="~/Asset/img/favicon.ico" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Asset/lib/slick/slick.css" rel="stylesheet">
+    <link href="~/Asset/lib/slick/slick-theme.css" rel="stylesheet">
+    <style>
+        .extra.hidden {
+            display: none;
+        }
+
+        .toggle-button {
+            background: none;
+            border: none;
+            color: #007bff; /* Màu của liên kết thường */
+            cursor: pointer;
+        }
+
+            .toggle-button:focus {
+                outline: none;
+            }
+    </style>
+
+
+    <!-- Template Stylesheet -->
+    <link href="~/Asset/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-warning">
+            @TempData["Message"]
+        </div>
+    }
+    <!-- Top Header Start -->
+    <div class="top-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <div class="logo">
+                        <a href="@Url.Action("Index", "Trangchu")">
+                            <img src="~/Asset/img/logo.png" alt="Logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="search">
+                        <form action="@Url.Action("Search", "Trangchu")" method="get">
+                            <input type="text" name="query" placeholder="Search">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="user">
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tài khoản người dùng</a>
+                            <div class="dropdown-menu">
+                                @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("UserId")))
+                                {
+                                    <a href="@Url.Action("myaccount", "Trangchu")" class="dropdown-item">Tài khoản người dùng</a>
+                                    <a href="@Url.Action("Logout", "Trangchu")" class="dropdown-item">Đăng xuất</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Login", "Trangchu")" class="dropdown-item">Đăng nhập</a>
+                                    <a href="@Url.Action("Register", "Trangchu")" class="dropdown-item">Đăng kí</a>
+                                }
+                            </div>
+                        </div>
+
+                        <a href="@Url.Action("cart", "Trangchu")" class="cart">
+                            <i class="fa fa-cart-plus"></i>
+                            <span>(0)</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Top Header End -->
+    <!-- Header Start -->
+    <div class="header">
+        <div class="container">
+            <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    >
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav m-auto">
+                        <a href="@Url.Action("index", "Trangchu")" class="nav-item nav-link">Trang chủ</a>
+                        <a href="@Url.Action("product_list", "Trangchu")" class="nav-item nav-link">Sản phẩm</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Danh mục sản phẩm</a>
+                            <div class="dropdown-menu">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6 class="dropdown-header">Danh mục Nam</h6>
+                                        @foreach (var category in namCategories.Where(c => c.Gender.Equals("nam", StringComparison.OrdinalIgnoreCase)))
+                                        {
+                                            <a href="@Url.Action("product_list_category", "Trangchu", new { categoryId = category.CategoryId, gender = "Nam" })" class="dropdown-item">@category.CategoryName</a>
+                                        }
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6 class="dropdown-header">Danh mục Nữ</h6>
+                                        @foreach (var category in namCategories.Where(c => c.Gender.Equals("nữ", StringComparison.OrdinalIgnoreCase)))
+                                        {
+                                            <a href="@Url.Action("product_list_category", "Trangchu", new { categoryId = category.CategoryId, gender = "Nữ" })" class="dropdown-item">@category.CategoryName</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="@Url.Action("contact", "Trangchu")" class="nav-item nav-link">Liên hệ chúng tôi</a>
+                        
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Header End -->
+    <!-- Main Slider Start -->
+    <div class="home-slider">
+        <div class="main-slider">
+            <div class="main-slider-item"><img src="~/Asset/img/slider-1.jpg" alt="Slider Image" /></div>
+            <div class="main-slider-item"><img src="~/Asset/img/slider-2.jpg" alt="Slider Image" /></div>
+            <div class="main-slider-item"><img src="~/Asset/img/slider-3.jpg" alt="Slider Image" /></div>
+        </div>
+    </div>
+    <!-- Main Slider End -->
+    <!-- Feature Start-->
+    <div class="feature">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 feature-col">
+                    <div class="feature-content">
+                        <i class="fa fa-shield"></i>
+                        <h2>Mua sắm an toàn và đáng tin cậy</h2>
+                        <p>
+                            Chúng tôi hiểu rằng việc mua sắm trực tuyến đáng tin cậy 
+                        </p>
+                        <p class="extra hidden">
+                            là một ưu tiên hàng đầu đối với bạn.Chính vì vậy, chúng tôi cam kết mang đến cho bạn trải nghiệm mua sắm tốt nhất với sự đáng tin cậy và uy tín.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 feature-col">
+                    <div class="feature-content">
+                        <i class="fa fa-shopping-bag"></i>
+                        <h2>
+                            Sản phẩm chất lượng
+                        </h2>
+                        <p>
+                            Chúng tôi cam kết mang đến cho bạn những sản phẩm vượt qua sự mong đợi của bạn về chất lượng và hiệu suất.
+                        </p>
+                        <p class="extra hidden">
+                            Chúng tôi mang đến sự đảm bảo về chất lượng sản phẩm để bạn luôn hài lòng với mỗi lần mua sắm.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 feature-col">
+                    <div class="feature-content">
+                        <i class="fa fa-truck"></i>
+                        <h2>Giao hàng tận cửa toàn cầu</h2>
+                        <p>
+                            Chúng tôi tự hào thông báo rằng chúng tôi cung cấp dịch 
+                        </p>
+                        <p class="extra hidden">
+                            vụ giao hàng toàn cầu và miễn phí ship để đáp ứng nhu cầu mua sắm của bạn một cách tốt nhất.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 feature-col">
+                    <div class="feature-content">
+                        <i class="fa fa-phone"></i>
+                        <h2>Hỗ trợ điện thoại 24/7</h2>
+                        <p>
+                            Để đảm bảo rằng bạn có trải nghiệm mua sắm suôn sẻ 
+                        </p>
+                        <p class="extra hidden">
+                            và không gặp khó khăn nào, chúng tôi có sẵn dịch vụ hỗ trợ qua điện thoại.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Feature End-->
+    <!-- Category Start-->
+    <div class="category">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="category-img">
+                        <img  src="~/Asset/img/631ff8a39d542276c0f56c6406b64537.jfif" />
+                        <a class="category-name" href="">
+                            <h2>Đồ thể thao nữ</h2>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="category-img">
+                        <img style="height:300px" src="~/Asset/img/do-cong-so-nu-3.webp" />
+                        <a class="category-name" href="">
+                            <h2>Đồ công sở nữ</h2>
+                        </a>
+                    </div>
+                    <div class="category-img">
+                        <img style="height:300px" src="~/Asset/img/e9b49ce28ea83fcf211c117d6d8fe631.cach-phoi-do-cong-so-dep-cho-nam-1.webp" />
+                        <a class="category-name" href="">
+                            <h2>Đồ công sở Nam</h2>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="category-img">
+                        <img  src="~/Asset/img/840efc421563e23b317763350ad0d3c8_tn.jfif" />
+                        <a class="category-name" href="">
+                            <h2>Đồ thể thao nam</h2>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Category End-->
+    
+
+    <!-- Newsletter Start -->
+    <div class="newsletter">
+        <div class="container">
+            <div class="section-header">
+                <h3>Đăng ký nhận bản tin của chúng tôi</h3>
+                <p>
+                    Đăng ký nhận bản tin của chúng tôi để không bỏ lỡ bất kỳ ưu đãi và khuyến mãi hấp dẫn nào!
+                </p>
+            </div>
+            <div class="form">
+                <input type="email" placeholder="Hãy điền email của bạn ở đây">
+                <button style="width:100px" >Đăng kí</button>
+            </div>
+        </div>
+    </div>
+    <!-- Newsletter End -->
+    <!-- Recent Product Start -->
+    <div class="recent-product">
+        <div class="container">
+            <div class="section-header" >
+                <h3>Sản phẩm mới nhất</h3>
+                <p>
+                    Dưới đây là những sản phẩm mới nhất mà chúng tôi muốn giới thiệu đến bạn.
+                </p>
+
+            </div>
+            <div style="text-align: right;">
+                <a href="@Url.Action("product_list_new", "Trangchu")" style="font-size: 20px;">Xem tất cả</a>
+            </div>
+            <div class="row align-items-center product-slider product-slider-4">
+                @foreach (var product in ViewBag.ModelIndex.LatestProducts)
+                {
+                    <div class="col-lg-3">
+                        <div class="product-item">
+                            <div class="product-image">
+                                <a href="@Url.Action("product_detail", "Trangchu", new { productId = product.ProductId })">
+                                    <img style="height: 350px;" src="~/HinhAnh/SanPham/@product.ProductImage" alt="Product Image">
+                                </a>
+                                <div class="product-action">
+                                    <a href="@Url.Action("AddToCart", "Trangchu", new { productId = product.ProductId })"><i class="fa fa-cart-plus"></i></a>
+                                    <a href="#"><i class="fa fa-heart"></i></a>
+                                    <a href="#"><i class="fa fa-search"></i></a>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="title"><a href="#">@product.ProductName</a></div>
+                                <div class="ratting">
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        <i class="fa fa-star"></i>
+                                    }
+                                </div>
+                                <div class="price">$@product.Price</div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Recent Product End -->
+    <!-- Brand Start -->
+    <div class="brand">
+        <div class="container">
+            <div class="section-header">
+                <h3>
+                    Thương hiệu của chúng tôi
+                </h3>
+                <p>
+                    Chúng tôi tự hào giới thiệu các thương hiệu của mình. Chất lượng luôn là ưu tiên hàng đầu và chúng tôi hy vọng rằng bạn sẽ tận hưởng những sản phẩm tuyệt vời từ các thương hiệu này.
+                </p>
+            </div>
+            <div class="brand-slider">
+                <div class="brand-item"><img src="~/Asset/img/brand-1.png" alt=""></div>
+                <div class="brand-item"><img src="~/Asset/img/brand-2.png" alt=""></div>
+                <div class="brand-item"><img src="~/Asset/img/brand-3.png" alt=""></div>
+                <div class="brand-item"><img src="~/Asset/img/brand-4.png" alt=""></div>
+                <div class="brand-item"><img src="~/Asset/img/brand-5.png" alt=""></div>
+                <div class="brand-item"><img src="~/Asset/img/brand-6.png" alt=""></div>
+            </div>
+        </div>
+    </div>
+    <!-- Brand End -->
+    <!-- Footer Start -->
+    <div class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h1>E Shop</h1>
+                        <p>
+                            Xin chào quý khách hàng, Chào mừng bạn đến với cửa hàng trực tuyến của chúng tôi! Với hàng ngàn sản phẩm đa dạng từ nhiều danh mục khác nhau, chúng tôi tự hào mang đến những sản phẩm chất lượng và dịch vụ tốt nhất cho bạn. Hãy khám phá và trải nghiệm
+                            mua sắm trực tuyến tuyệt vời cùng chúng tôi.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Trang Tiện Ích</h3>
+                        <ul>
+                            <li><a href="@Url.Action("product_list", "Trangchu")">Sản Phẩm</a></li>
+
+                            <li><a href="@Url.Action("cart", "Trangchu")">Giỏ Hàng</a></li>
+                            <li><a href="@Url.Action("Checkout", "Trangchu")">Thanh toán</a></li>
+                            @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("UserId")))
+                            {
+                               
+                            }
+                            else
+                            {
+                                <li><a href="@Url.Action("login", "Trangchu")">Đăng nhập</a></li>
+
+                                <li><a href="@Url.Action("Register", "Trangchu")">Đăng kí</a></li>
+
+                            }
+                            <li><a href="@Url.Action("myaccount", "Trangchu")">Tài khoản của tôi</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Liên Kết Nhanh</h3>
+                        <ul>
+                            <li><a href="@Url.Action("product_list", "Trangchu")">Sản Phẩm</a></li>
+                            <li><a href="@Url.Action("cart", "Trangchu")">Giỏ Hàng</a></li>
+                            <li><a href="@Url.Action("Checkout", "Trangchu")">Thanh toán</a></li>
+                            @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("UserId")))
+                            {
+
+                            }
+                            else
+                            {
+                                <li><a href="@Url.Action("login", "Trangchu")">Đăng nhập</a></li>
+
+                                <li><a href="@Url.Action("Register", "Trangchu")">Đăng kí</a></li>
+                            }
+                            <li><a href="@Url.Action("myaccount", "Trangchu")">Tài khoản của tôi</a></li>
+                            <li><a href="@Url.Action("wishlist", "Trangchu")">Danh Sách Yêu Thích</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Liên hệ với chúng tôi</h3>
+                        <div class="contact-info">
+                            <p><i class="fa fa-map-marker"></i>123 E Shop, Los Angeles, CA, USA</p>
+                            <p><i class="fa fa-envelope"></i>email@example.com</p>
+                            <p><i class="fa fa-phone"></i>+123-456-7890</p>
+                            <div class="social">
+                                <a href=""><i class="fa fa-twitter"></i></a>
+                                <a href=""><i class="fa fa-facebook"></i></a>
+                                <a href=""><i class="fa fa-linkedin"></i></a>
+                                <a href=""><i class="fa fa-instagram"></i></a>
+                                <a href=""><i class="fa fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row payment">
+                <div class="col-md-6">
+                    <div class="payment-method">
+                        <p>We Accept:</p>
+                        <img src="~/Asset/img/payment-method.png" alt="Payment Method" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="payment-security">
+                        <p>Secured By:</p>
+                        <img src="~/Asset/img/godaddy.svg" alt="Payment Security" />
+                        <img src="~/Asset/img/norton.svg" alt="Payment Security" />
+                        <img src="~/Asset/img/ssl.svg" alt="Payment Security" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+    <!-- Footer Bottom Start -->
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 copyright">
+                    <p>Copyright &copy; <a href="https://htmlcodex.com">HTML Codex</a>. All Rights Reserved</p>
+                </div>
+
+                <div class="col-md-6 template-by">
+                    <p>Template By <a href="https://htmlcodex.com">HTML Codex</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Bottom End -->
+    <!-- Back to Top -->
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Asset/lib/easing/easing.min.js"></script>
+    <script src="~/Asset/lib/slick/slick.min.js"></script>
+
+
+    <!-- Template Javascript -->
+    <script src="~/Asset/js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const extraTexts = document.querySelectorAll(".extra");
+
+            extraTexts.forEach(extraText => {
+                const toggleButton = document.createElement("button");
+                toggleButton.className = "toggle-button";
+                toggleButton.textContent = "Xem thêm";
+
+                extraText.parentNode.insertBefore(toggleButton, extraText.nextSibling);
+
+                toggleButton.addEventListener("click", function () {
+                    extraText.classList.toggle("hidden");
+                    if (toggleButton.textContent === "Xem thêm") {
+                        toggleButton.textContent = "Ẩn đi";
+                    } else {
+                        toggleButton.textContent = "Xem thêm";
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

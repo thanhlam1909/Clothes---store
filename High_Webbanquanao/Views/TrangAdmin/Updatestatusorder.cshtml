@@ -1,0 +1,66 @@
+﻿@model IEnumerable<High_Webbanquanao.Data.Invoice>
+
+@{
+    ViewData["Title"] = "Updatestatusorder";
+}
+
+<h1>Updatestatusorder</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th hidden>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                Ngày đặt hàng
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+            <th>
+                Phí vận chuyển
+            </th>
+            <th>
+                Phương thức thanh toán
+            </th>
+            <th>
+                Trạng thái đơn hàng
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td hidden>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShippingFee)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaymentMethod)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusOrder)
+                </td>
+                <td>
+                    <a asp-action="Edit_UpdateOrderStatus" asp-route-id="@item.InvoiceId">Edit</a> |
+                    <a asp-action="Details_UpdateOrderStatus" asp-route-id="@item.InvoiceId">Details</a> |
+                    <a asp-action="Delete_UpdateOrderStatus" asp-route-id="@item.InvoiceId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

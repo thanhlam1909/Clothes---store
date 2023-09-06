@@ -1,0 +1,33 @@
+﻿
+<div id="product-list-container" class="row">
+    @foreach (var product in Model.Productlist)
+    {
+        <div class="col-lg-4">
+            <div class="product-item">
+                <div class="product-image">
+                    <a href="@Url.Action("product_detail", "Trangchu", new { productId = product.ProductId })">
+                        <img style="height: 350px;" src="~/HinhAnh/SanPham/@product.ProductImage" alt="Product Image">
+                    </a>
+                    <div class="product-action">
+                        <a href="@Url.Action("AddToCart", "Trangchu", new { productId = product.ProductId })"><i class="fa fa-cart-plus"></i></a>
+                        <a href="#"><i class="fa fa-heart"></i></a>
+                        <a href="#"><i class="fa fa-search"></i></a>
+                    </div>
+                </div>
+                <div class="product-content">
+                    <div class="title">
+                        <a href="@Url.Action("product_detail", "Trangchu", new { productId = product.ProductId })">@product.ProductName</a>
+                    </div>
+                    <div class="ratting">
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            <i class="fa fa-star"></i>
+                        }
+                    </div>
+                    <div class="price">$@product.Price</div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

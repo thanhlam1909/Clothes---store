@@ -1,0 +1,154 @@
+﻿@using High_Webbanquanao.Data
+@{
+    var categories = ViewBag.Categories as List<ProductCategory>;
+    var genders = ViewBag.Genders as List<string>;
+}
+@using High_Webbanquanao.Models
+
+@model Model_ProductCategory_ProductCreate;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Include Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Create Product</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-action="Product_create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="mb-3">
+                        <label for="ProductName" class="form-label">Product Name</label>
+                        <input type="text" id="ProductName" name="Product.ProductName" class="form-control" />
+                        <span asp-validation-for="Product.ProductName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Description" class="form-label">Description</label>
+                        <input type="text" id="Description" name="Product.Description" class="form-control" />
+                        <span asp-validation-for="Product.Description" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ProductImage" class="form-label">Hình</label>
+                        <input type="file" id="Product_fileInput" name="Product_fileInput" class="form-control" />
+                        <span asp-validation-for="Product.ProductImage" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Price" class="form-label">Price</label>
+                        <input type="number" id="Price" name="Product.Price" class="form-control" step="0.01" />
+                        <span asp-validation-for="Product.Price" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3" hidden>
+                        <label for="StockQuantity" class="form-label">Stock Quantity</label>
+                        <input type="number" id="StockQuantity" name="Product.StockQuantity" class="form-control" value="100" />
+                        <span asp-validation-for="Product.StockQuantity" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Material" class="form-label">Chất liệu</label>
+                        <select id="Material" name="Product.Material" class="form-control">
+                            <option value="Cotton">Sợi bông</option>
+                            <option value="Polyester">Polyester</option>
+                            <option value="Leather">Da</option>
+                        </select>
+                        <span asp-validation-for="Product.Material" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Size" class="form-label">Size</label>
+                        <select id="Size" name="Product.Size" class="form-control">
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+                        </select>
+                        <span asp-validation-for="Product.Size" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Color" class="form-label">Color</label>
+                        <select id="Color" name="Product.Color" class="form-control">
+                            <option value="Đỏ">Đỏ</option>
+                            <option value="Xanh Dương">Xanh Dương</option>
+                            <option value="Xanh Lá">Xanh Lá</option>
+                            <option value="Vàng">Vàng</option>
+                            <option value="Đen">Đen</option>
+                            <option value="Trắng">Trắng</option>
+                            <option value="Xám">Xám</option>
+                            <option value="Xanh Dương Nhạt">Xanh Dương Nhạt</option>
+                            <option value="Xanh Lá Cây">Xanh Lá Cây</option>
+                            <option value="Hồng">Hồng</option>
+                            <option value="Cam">Cam</option>
+                            <option value="Tím">Tím</option>
+                            <option value="Nâu">Nâu</option>
+                            <option value="Xám Tro">Xám Tro</option>
+                            <option value="Màu Mỡ">Màu Mỡ</option>
+                            <option value="Xanh Da Trời">Xanh Da Trời</option>
+
+                        </select>
+                        <span asp-validation-for="Product.Color" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Gender" class="form-label">Giới tính</label>
+                        <select id="Gender" name="ProductCategory.Gender" class="form-control">
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                        </select>
+                        <span asp-validation-for="ProductCategory.Gender" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ProductCategory.CategoryName" class="form-label">Category</label>
+                        <select asp-for="ProductCategory.CategoryName" class="form-control" id="category-select">
+                            <optgroup label="Nam" id="category-group-nam">
+                                @foreach (var category in categories.Where(c => c.Gender == "Nam"))
+                                {
+                                    <option value="@category.CategoryName">@category.CategoryName</option>
+                                }
+                            </optgroup>
+                            <optgroup label="Nữ" id="category-group-nu">
+                                @foreach (var category in categories.Where(c => c.Gender == "Nữ"))
+                                {
+                                    <option value="@category.CategoryName">@category.CategoryName</option>
+                                }
+                            </optgroup>
+                        </select>
+                        <span asp-validation-for="ProductCategory.CategoryName" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="button-container">
+                        <div class="btn-container">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap 5 JavaScript (Popper.js and Bootstrap.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const genderSelect = document.getElementById('Gender');
+        const categoryGroupNam = document.getElementById('category-group-nam');
+        const categoryGroupNu = document.getElementById('category-group-nu');
+
+        genderSelect.addEventListener('change', () => {
+            const selectedGender = genderSelect.value;
+
+            if (selectedGender === 'Nam') {
+                categoryGroupNam.style.display = 'block';
+                categoryGroupNu.style.display = 'none';
+            } else if (selectedGender === 'Nữ') {
+                categoryGroupNam.style.display = 'none';
+                categoryGroupNu.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

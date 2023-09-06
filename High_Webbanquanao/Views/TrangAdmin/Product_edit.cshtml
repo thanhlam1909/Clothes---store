@@ -1,0 +1,112 @@
+﻿@using High_Webbanquanao.Models
+
+@model Model_ProductCategory_ProductCreate;
+@{
+    ViewData["Title"] = "Product_edit";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Edit Product</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-action="Product_edit" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Product.ProductId" />
+
+                    <div class="mb-3">
+                        <label asp-for="Product.ProductName" class="form-label">Product Name</label>
+                        <input asp-for="Product.ProductName" class="form-control" />
+                        <span asp-validation-for="Product.ProductName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Product.Description" class="form-label">Description</label>
+                        <input asp-for="Product.Description" class="form-control" />
+                        <span asp-validation-for="Product.Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Product.ProductImage" class="control-label">Hình</label>
+                        <input type="file" name="Product_fileInput" class="form-control" />
+                        <span asp-validation-for="Product.ProductImage" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Product.Price" class="form-label">Price</label>
+                        <input asp-for="Product.Price" class="form-control" type="number" step="0.01" />
+                        <span asp-validation-for="Product.Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3" hidden>
+                        <label asp-for="Product.StockQuantity" class="form-label">Stock Quantity</label>
+                        <input asp-for="Product.StockQuantity" class="form-control" type="number" value="100" />
+                        <span asp-validation-for="Product.StockQuantity" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Product.Material" class="form-label">Chất liệu</label>
+                        <select asp-for="Product.Material" class="form-control">
+                            <option value="Cotton">Sợi bông</option>
+                            <option value="Polyester">Polyester</option>
+                            <option value="Leather">Da</option>
+                        </select>
+                        <span asp-validation-for="Product.Material" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Product.Size" class="form-label">Size</label>
+                        <select asp-for="Product.Size" class="form-control">
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+                        </select>
+                        <span asp-validation-for="Product.Size" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Product.Color" class="form-label">Color</label>
+                        <select asp-for="Product.Color" class="form-control">
+                            <option value="Đỏ">Đỏ</option>
+                            <option value="Xanh Dương">Xanh Dương</option>
+                            <option value="Xanh Lá">Xanh Lá</option>
+                            <option value="Vàng">Vàng</option>
+                            <option value="Đen">Đen</option>
+                            <option value="Trắng">Trắng</option>
+                            <option value="Xám">Xám</option>
+                            <option value="Xanh Dương Nhạt">Xanh Dương Nhạt</option>
+                            <option value="Xanh Lá Cây">Xanh Lá Cây</option>
+                            <option value="Hồng">Hồng</option>
+                            <option value="Cam">Cam</option>
+                            <option value="Tím">Tím</option>
+                            <option value="Nâu">Nâu</option>
+                            <option value="Xám Tro">Xám Tro</option>
+                            <option value="Màu Mỡ">Màu Mỡ</option>
+                            <option value="Xanh Da Trời">Xanh Da Trời</option>
+                            <!-- Thêm các màu khác tương tự -->
+                        </select>
+                        <span asp-validation-for="Product.Color" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JavaScript (Popper.js and Bootstrap.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
