@@ -314,11 +314,11 @@
                         <ul>
                             <li><a href="@Url.Action("product_list", "Trangchu")">Sản Phẩm</a></li>
 
-                            <li><a href="@Url.Action("cart", "Trangchu")">Giỏ Hàng</a></li>
-                            <li><a href="@Url.Action("Checkout", "Trangchu")">Thanh toán</a></li>
+
                             @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("UserId")))
                             {
-
+                                <li><a href="@Url.Action("cart", "Trangchu")">Giỏ Hàng</a></li>
+                                <li><a href="@Url.Action("Checkout", "Trangchu")">Thanh toán</a></li>
                             }
                             else
                             {
@@ -337,10 +337,12 @@
                         <h3 class="title">Liên Kết Nhanh</h3>
                         <ul>
                             <li><a href="@Url.Action("product_list", "Trangchu")">Sản Phẩm</a></li>
-                            <li><a href="@Url.Action("cart", "Trangchu")">Giỏ Hàng</a></li>
-                            <li><a href="@Url.Action("Checkout", "Trangchu")">Thanh toán</a></li>
+
                             @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("UserId")))
                             {
+                                <li><a href="@Url.Action("cart", "Trangchu")">Giỏ Hàng</a></li>
+                                <li><a href="@Url.Action("Checkout", "Trangchu")">Thanh toán</a></li>
+                                <li><a href="@Url.Action("myaccount", "Trangchu")">Tài khoản của tôi</a></li>
 
                             }
                             else
@@ -349,7 +351,6 @@
 
                                 <li><a href="@Url.Action("Register", "Trangchu")">Đăng kí</a></li>
                             }
-                            <li><a href="@Url.Action("myaccount", "Trangchu")">Tài khoản của tôi</a></li>
                             <li><a href="@Url.Action("wishlist", "Trangchu")">Danh Sách Yêu Thích</a></li>
                         </ul>
                     </div>
