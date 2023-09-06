@@ -109,3 +109,6 @@ Sau khi bấm nút giỏ hàng sản phẩm sẽ được thêm vào giỏ hàng
 ## Thanh toán
 Sau khi bấm chữ thanh toán trong giỏ hàng sản phẩm sẽ chuyển tới trang thanh toán
 ![Trang Chi tiết sản phẩm](./High_Webbanquanao/wwwroot/Asset/img/z4668060929624_39c86f42fd77476732c2492c42d33a4e.jpg)
+## Sau khi Thanh toán
+Đơn đã đặt sẽ hiện đơn hàng đã bấm thanh toán
+![Trang Chi tiết sản phẩm](./High_Webbanquanao/wwwroot/Asset/img/1.jpg)
