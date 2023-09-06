@@ -102,13 +102,45 @@ Trang danh sách sản phẩm hiển thị các sản phẩm có sẵn trong c�
 ![Danh sách sản phẩm mới nhất sau khi bấm tìm kiếm nâng cao](./High_Webbanquanao/wwwroot/Asset/img/z4668085813196_b99c6b490549afb5ac073123fcf662c8.jpg)
 
 ## Trang Chi tiết sản phẩm
+
 ![Trang Chi tiết sản phẩm](./High_Webbanquanao/wwwroot/Asset/img/z4668045734969_af2d1d802c88b0e2638e4b3754bebcb8.jpg)
+
 ## Giỏ hàng
+
 Sau khi bấm nút giỏ hàng sản phẩm sẽ được thêm vào giỏ hàng
+
 ![Trang Chi tiết sản phẩm](./High_Webbanquanao/wwwroot/Asset/img/z4668059932079_e2e0545e809c13fc20b4371eee1c5c16.jpg)
+
 ## Thanh toán
+
 Sau khi bấm chữ thanh toán trong giỏ hàng sản phẩm sẽ chuyển tới trang thanh toán
 ![Trang Chi tiết sản phẩm](./High_Webbanquanao/wwwroot/Asset/img/z4668060929624_39c86f42fd77476732c2492c42d33a4e.jpg)
+
 ## Sau khi Thanh toán
+
 Đơn đã đặt sẽ hiện đơn hàng đã bấm thanh toán
-![Trang Chi tiết sản phẩm](./High_Webbanquanao/wwwroot/Asset/img/1.jpg)
+![Đơn hàng đã được đặt](./High_Webbanquanao/wwwroot/Asset/img/1.jpg)
+
+## Trang Cá nhân
+
+Trang này sẽ hiển thị thông tin người dùng đã đăng nhập , Cập nhật thông tin cá nhân và chỉnh sửa mật khẩu
+
+![Đơn hàng đã được đặt](./High_Webbanquanao/wwwroot/Asset/img/z4669463640594_80822d2e1a84321400f6e03a80e0156a.jpg)
+
+### Giao diện của admin sau khi đăng nhập
+
+![Giao diện admin](./High_Webbanquanao/wwwroot/Asset/img/z4669468565925_e8a28399e298b56f4c4f4e5410d1aa65.jpg)
+
+#### Khi bấm vào Cập nhật trạng thái đơn hàng
+
+Giao diện sẽ hiển thị ra danh sách những đơn hàng.
+
+![Giao diện admin](./High_Webbanquanao/wwwroot/Asset/img/z4669469453717_40bb509fee8221ff6635b7be9dea1853.jpg)
+
+#### Sau khi bấm cập nhật đơn hàng sẽ hiện giao diện để chỉnh sửa trạng thái đơn hàng
+
+![Giao diện admin](./High_Webbanquanao/wwwroot/Asset/img/z4669495613678_1c679f4f5de8f149f300520a4487e4bf.jpg)
+
+#### Sau khi chọn lưu thay đổi trạng thái đơn hàng.
+
+![Giao diện admin](./High_Webbanquanao/wwwroot/Asset/img/z4669497188471_03bac90f8088a17e5d655268d74ddc55.jpg)
